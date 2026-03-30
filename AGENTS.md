@@ -84,12 +84,12 @@ yarn fix              # auto-fix lint and formatting issues
 
 **Never modify these files without explicit user approval and a full test suite pass:**
 
-| File | Reason |
-|------|--------|
-| `packages/excalidraw/scene/renderer.ts` | Core render pipeline |
-| `packages/excalidraw/data/restore.ts` | File format backward compatibility |
-| `packages/excalidraw/actions/manager.ts` | Action system |
-| `packages/excalidraw/types.ts` | Core type definitions |
+| File                                       | Reason                             |
+|:-------------------------------------------|:-----------------------------------|
+| `packages/excalidraw/scene/Renderer.ts`    | Core render pipeline               |
+| `packages/excalidraw/data/restore.ts`      | File format backward compatibility |
+| `packages/excalidraw/actions/manager.tsx`  | Action system                      |
+| `packages/excalidraw/types.ts`             | Core type definitions              |
 
 Changes to protected files require: full understanding of dependents + `yarn test:all` pass +
 manual QA verification.
