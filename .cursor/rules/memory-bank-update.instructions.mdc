@@ -1,0 +1,12 @@
+---
+description: Updates the Memory Bank with recent changes, ensuring all technical details are accurate and up to date. Use when the user asks to update the memory bank, sync documentation, or refresh project context.
+alwaysApply: true
+---
+
+# Memory Bank
+
+This project uses the **Memory Bank** pattern at @folder:dosc/memory for persistent. versioned context.
+
+After work that materially affects behaviour, structure, tooling or conventions follow **memory-bank-update**: @file:.agents/memory-bank-update/SKILL.md
+
+Skiip **Memory Bank** updates for trivial typos or tiny bugfixes unless they alter documented constrains or behaviour.
