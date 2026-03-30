@@ -40,7 +40,7 @@ yarn install          # install all workspace dependencies
 
 **Critical:** packages have a hard dependency chain. Always build in this order:
 
-```
+```text
 common → math → element → excalidraw → excalidraw-app
 ```
 
@@ -74,7 +74,6 @@ yarn fix              # auto-fix lint and formatting issues
 
 > After **any non-documentation change**, run `yarn test` and `yarn test:typecheck` before
 > committing to confirm no regressions.
-
 > `noEmit: true` in `tsconfig.json` — TypeScript is used for type-checking only; Vite
 > handles compilation.
 
@@ -99,6 +98,7 @@ manual QA verification.
 ## Code Conventions
 
 ### TypeScript
+
 - Strict mode — no `any`, no `@ts-ignore`
 - Prefer `type` over `interface` for simple shapes
 - Import types: `import type { X } from "..."`
@@ -106,6 +106,7 @@ manual QA verification.
 - Prefer `const` / `readonly`; avoid mutation
 
 ### React
+
 - Functional components + hooks only — no class components
 - Props type named `{ComponentName}Props`
 - Named exports only — no default exports
@@ -113,21 +114,25 @@ manual QA verification.
 - No conditional hooks
 
 ### Files
+
 - kebab-case filenames: `element-utils.ts`
 - PascalCase component files: `LayerUI.tsx`
 - Colocated tests: `ComponentName.test.tsx`
 
 ### Naming
+
 - PascalCase: component names, interfaces, type aliases
 - camelCase: variables, functions, methods
 - ALL_CAPS: constants
 
 ### Element mutations
+
 - Always use `mutateElement()` (increments `version`/`versionNonce`) or `newElementWith()`
 - Never assign element properties directly
 - Raw `mutateElement()` bypasses history and collab sync — use only when intentional
 
 ### Math / geometry
+
 - Always use the `Point` type from `packages/math/src/types.ts` instead of `{ x, y }`
 
 ---
