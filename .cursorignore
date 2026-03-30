@@ -56,7 +56,6 @@ package-lock.json
 
 # Localization and code review automation configs
 crowdin.yml
-.coderabbit.yaml
 
 # Misc
 .DS_Store
