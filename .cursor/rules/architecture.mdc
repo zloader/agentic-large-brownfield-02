@@ -13,13 +13,14 @@ alwaysApply: false
   is the default path and keeps history, undo/redo, and collab sync consistent.
 - State type: AppState (`packages/excalidraw/types.ts`)
 
-### Exceptions — direct `this.app.setState`
+### Exceptions — direct `this.setState` / `this.app.setState`
 
-Two modules currently bypass `actionManager.executeAction()` and call `this.app.setState`
-directly. These are **known, accepted exceptions**:
+The following sites use `this.setState` directly rather than going through
+`actionManager.executeAction()`. These are **known, accepted exceptions**:
 
 | Site | Reason |
 |------|--------|
+| `packages/excalidraw/components/App.tsx` (~218 calls) | `App` is the React class component that *owns* `AppState`. `actionManager.executeAction()` itself delegates to `App.syncActionResult`, which calls `this.setState` — so these calls are the canonical implementation of state management, not a bypass. Functional sub-components (`LayerUI.tsx`, `JSONExportDialog.tsx`, `ConvertElementTypePopup.tsx`) are hooks-based and have zero direct `setState` calls. |
 | `packages/excalidraw/lasso/index.ts` | Lasso selection state is transient/mid-gesture and does not belong in action history. |
 | `packages/excalidraw/data/library.ts` | Library loading is an async, multi-step operation where action lifecycle does not map cleanly. |
 
