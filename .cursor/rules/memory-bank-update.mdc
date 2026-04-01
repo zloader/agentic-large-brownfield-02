@@ -10,3 +10,21 @@ This project uses the **Memory Bank** pattern at @folder:dosc/memory for persist
 After work that materially affects behaviour, structure, tooling or conventions follow **memory-bank-update**: @file:.agents/memory-bank-update/SKILL.md
 
 Skiip **Memory Bank** updates for trivial typos or tiny bugfixes unless they alter documented constrains or behaviour.
+
+## How to Verify
+
+### Confirm Memory Bank files are up to date
+
+```bash
+# Check that memory bank files were recently modified after a code change
+git diff --name-only HEAD | grep "docs/memory/"
+
+# Verify no memory bank file exceeds 200 lines
+wc -l docs/memory/*.md
+# Expected: all files ≤ 200 lines
+
+# Confirm updated files reference real files/symbols that exist in the codebase
+grep -rn "activeContext\|systemPatterns\|decisionLog\|techContext\|productContext\|projectbrief\|progress" docs/memory/ --include="*.md" | wc -l
+# Expected: non-zero (cross-references exist between memory bank files)
+```
+
