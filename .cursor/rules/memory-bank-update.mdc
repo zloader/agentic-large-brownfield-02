@@ -5,11 +5,11 @@ alwaysApply: true
 
 # Memory Bank
 
-This project uses the **Memory Bank** pattern at @folder:dosc/memory for persistent. versioned context.
+This project uses the **Memory Bank** pattern at @folder:docs/memory for persistent. Versioned context.
 
-After work that materially affects behaviour, structure, tooling or conventions follow **memory-bank-update**: @file:.agents/memory-bank-update/SKILL.md
+After work that materially affects behaviour, structure, tooling or conventions follow **memory-bank-update**: @file:.agents/skills/memory-bank-update/SKILL.md
 
-Skiip **Memory Bank** updates for trivial typos or tiny bugfixes unless they alter documented constrains or behaviour.
+Skip **Memory Bank** updates for trivial typos or tiny bugfixes unless they alter documented constraints or behaviour.
 
 ## How to Verify
 

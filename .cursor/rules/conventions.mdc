@@ -10,7 +10,9 @@ alwaysApply: false
 
 - Functional components + hooks ONLY (no class components)
 - Props interface: `{ComponentName}Props`
-- Named exports only (no default exports)
+- Prefer named exports; default exports are allowed for existing/legacy modules or where
+  justified (e.g., `React.memo` wrappers). New files should use named exports unless there
+  is a clear reason not to.
 - Colocated tests: `ComponentName.test.tsx`
 
 ## TypeScript
@@ -33,17 +35,15 @@ alwaysApply: false
 grep -rn "extends React\.Component\|extends Component\|extends PureComponent" packages/ --include="*.tsx" --include="*.ts"
 # Expected: no output
 
-# Confirm no default exports in component files
+# Audit default exports in new component files (existing files are exempt)
+# Prefer named exports for new code; flag unexpected new default exports for review
 grep -rn "^export default" packages/ --include="*.tsx"
-# Expected: no output
+# Expected: only legacy/existing files — new files should use named exports
 ```
 
 ### TypeScript
 
 ```bash
-grep -rn "interface" packages/ --include="*.ts" --include="*.tsx"
-# Confirm no `any` usage
-
 # TODO: Update to skip comment lines.
 grep -rn ": any\b\|as any\b" packages/ --include="*.ts" --include="*.tsx"
 # Expected: no output

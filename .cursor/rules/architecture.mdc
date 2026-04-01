@@ -9,8 +9,36 @@ alwaysApply: false
 ## State Management
 
 - Custom state via actionManager — NOT Redux/Zustand/MobX
-- State updates: actionManager.dispatch() ONLY
-- State type: AppState (packages/excalidraw/types.ts)
+- State updates: prefer `actionManager.executeAction()` for all `AppState` mutations — this
+  is the default path and keeps history, undo/redo, and collab sync consistent.
+- State type: AppState (`packages/excalidraw/types.ts`)
+
+### Exceptions — direct `this.app.setState`
+
+Two modules currently bypass `actionManager.executeAction()` and call `this.app.setState`
+directly. These are **known, accepted exceptions**:
+
+| Site | Reason |
+|------|--------|
+| `packages/excalidraw/lasso/index.ts` | Lasso selection state is transient/mid-gesture and does not belong in action history. |
+| `packages/excalidraw/data/library.ts` | Library loading is an async, multi-step operation where action lifecycle does not map cleanly. |
+
+### Introducing a new direct `setState`
+
+If you must add another direct `this.app.setState` call:
+
+1. **Add a comment** at the call site explaining why `actionManager.executeAction()` is not
+   suitable (e.g., mid-gesture transient state, async initialization).
+2. **Open a follow-up TODO** (or GitHub issue) to migrate to `actionManager.executeAction()`
+   once the action system supports the use-case.
+
+   ```ts
+   // TODO(migration): replace with actionManager.executeAction() once <reason>.
+   // Direct setState used here because <short rationale>.
+   this.app.setState({ ... });
+   ```
+
+Any new direct `setState` without this documentation should be treated as a bug in code review.
 
 ## Rendering
 
@@ -44,4 +72,16 @@ grep -rn "\.executeAction(" packages/excalidraw/ --include="*.ts" --include="*.t
 # Confirm no forbidden rendering libraries are imported
 grep -rn "react-konva\|fabric\.js\|pixi\.js\|from ['\"]pixi['\"]" packages/excalidraw/ --include="*.ts" --include="*.tsx"
 # Expected: no output
+
+# Flag any React DOM drawing — ReactDOM.render or createRoot must NOT be used for canvas/drawing
+grep -rn "ReactDOM\.render\|createRoot\b" packages/excalidraw/ --include="*.ts" --include="*.tsx"
+# Expected: no output (react-dom helpers like flushSync/createPortal are fine; rendering-to-DOM for drawing is not)
+
+# Confirm the Scene → renderStaticScene/renderInteractiveScene pipeline exists
+grep -rn "renderStaticScene\|renderInteractiveScene" packages/excalidraw/ --include="*.ts" --include="*.tsx"
+# Expected: hits in renderer/staticScene.ts, renderer/interactiveScene.ts, and call sites in components/canvases/
+
+# Confirm renderStaticScene/renderInteractiveScene delegate to canvas.getContext
+grep -rn "getContext(" packages/excalidraw/renderer/ --include="*.ts" --include="*.tsx"
+# Expected: hits inside renderer/staticScene.ts and/or renderer/helpers.ts confirming 2D canvas context use
 ```
