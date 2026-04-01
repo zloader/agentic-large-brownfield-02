@@ -178,10 +178,10 @@ yarn clean-install            # remove node_modules and reinstall from scratch
 
 1. Run `yarn fix` (auto-fix lint + formatting).
 2. Run `yarn test && yarn test:typecheck` — both must pass.
-3. Commits must include the co-author trailer:
-   ```
-   Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
-   ```
+3. Open a PR with a clear description of the change and its rationale.
+4. Request review from at least one maintainer.
+5. Address any review feedback and ensure all tests still pass.
+6. After approval, merge the PR and verify the changes in a test environment.
 
 ---
 
