@@ -26,6 +26,6 @@ Changes to protected files require:
 ```bash
 # Check git diff for protected files
 git diff --name-only HEAD | grep -E \
-  "packages/excalidraw/scene/renderer\.ts|packages/excalidraw/data/restore\.ts|packages/excalidraw/actions/manager\.ts|packages/excalidraw/types\.ts"
+  "packages/excalidraw/scene/Renderer\.ts|packages/excalidraw/data/restore\.ts|packages/excalidraw/actions/manager\.tsx|packages/excalidraw/types\.ts"
 # Expected: no output unless the change is intentional and approved
 ```
