@@ -45,7 +45,7 @@ operated Socket.IO relay and Firebase (Firestore + Storage) for encrypted cloud 
 
 This is a **yarn-workspaces monorepo**. Packages must only import *downward* in this chain:
 
-```
+```text
 @excalidraw/common → @excalidraw/math → @excalidraw/element → @excalidraw/excalidraw → excalidraw-app
 ```
 
